@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'core/di/injection.dart';
-import 'core/routing/app_router.dart';
 import 'core/config/env_config.dart';
+import 'core/theme/app_theme.dart';
+import 'core/routing/app_router.dart';
+import 'core/di/injection.dart';
 
-void main() {
-  // Wajib jika menggunakan async di main ke depannya (seperti inisialisasi Isar) [cite: 143]
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   
-  // Menjalankan Dependency Injection [cite: 145, 146]
-  setupLocator();
+  // Inisialisasi Dependency Injection
+  setupLocator(); 
   
   runApp(const FinalProjectApp());
 }
@@ -19,12 +19,16 @@ class FinalProjectApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
+      // Aturan: Sembunyikan banner debug jika berjalan di PROD
       debugShowCheckedModeBanner: !EnvConfig.isProduction,
-      title: 'UAS Mobile Lanjut',
-      theme: ThemeData(
-        useMaterial3: true,
-        colorSchemeSeed: Colors.blue,
-      ),
+      
+      // Membaca nama aplikasi secara dinamis berdasarkan NIM & Flavor
+      title: EnvConfig.appName, 
+      
+      // Menerapkan tema light mode kustom kita
+      theme: AppTheme.lightTheme,
+      
+      // Konfigurasi Router bawaan Modul 15
       routerConfig: AppRouter.router,
     );
   }
