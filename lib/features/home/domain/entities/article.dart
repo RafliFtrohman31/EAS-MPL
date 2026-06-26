@@ -1,6 +1,4 @@
-import 'package:equatable/equatable';
-
-class Article extends Equatable {
+class Article {
   final String id;
   final String title;
   final String content;
@@ -14,7 +12,4 @@ class Article extends Equatable {
     required this.urlToImage,
     required this.publishedAt,
   });
-
-  @override
-  List<Object?> get props => [id, title, content, urlToImage, publishedAt];
 }
