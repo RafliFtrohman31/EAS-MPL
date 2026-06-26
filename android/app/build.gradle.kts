@@ -15,7 +15,7 @@ plugins {
 
 android {
     // Mempertahankan namespace asli proyek Anda
-    namespace = "com.example.android_studio"
+    namespace = "com.example.uas_mobile_lanjut"
     
     // Tetap menggunakan SDK 36 agar sinkron dengan shared_preferences_android
     compileSdk = 36
@@ -31,7 +31,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.example.android_studio"
+        applicationId = "com.example.uas_mobile_lanjut"
         minSdk = flutter.minSdkVersion
         
         // Tetap menggunakan target SDK 36 bawaan proyek modern Anda

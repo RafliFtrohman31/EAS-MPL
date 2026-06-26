@@ -1,4 +1,4 @@
-package com.example.uas_mobile_lanjut // Sesuaikan dengan nama package asli Anda
+package com.example.uas_mobile_lanjut // 🌟 Tetap menggunakan nama proyek asli Anda
 
 import android.widget.Toast
 import io.flutter.embedding.android.FlutterActivity
