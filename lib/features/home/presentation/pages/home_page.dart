@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:uas_mobile_lanjut/core/config/env_config.dart';
 import 'package:uas_mobile_lanjut/features/home/presentation/cubit/news_cubit.dart';
 
 class HomePage extends StatefulWidget {
@@ -24,7 +25,8 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('DigiNews - Portal Berita'),
+        // Menggunakan nama aplikasi dinamis berdasarkan environment flavor (UTD - [NPM])
+        title: Text(EnvConfig.appName),
         actions: [
           IconButton(
             icon: const Icon(Icons.person_outline_rounded),
@@ -90,7 +92,6 @@ class _HomePageState extends State<HomePage> {
                 itemBuilder: (context, index) {
                   final article = articles[index];
                   return Card(
-                    // KODE YANG BENAR
                     margin: const EdgeInsets.only(bottom: 16),
                     clipBehavior: Clip.antiAlias,
                     shape: RoundedRectangleBorder(
