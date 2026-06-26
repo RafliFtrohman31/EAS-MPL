@@ -1,11 +1,8 @@
 import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:uas_mobile_lanjut/features/home/domain/repositories/news_repository.dart';
-
-// Ganti relative import dengan package import absolut untuk entitas
 import 'package:uas_mobile_lanjut/features/home/domain/entities/article.dart';
 
-// Panggil berkas state-nya di sini
 part 'news_state.dart';
 
 class NewsCubit extends Cubit<NewsState> {
@@ -30,7 +27,7 @@ class NewsCubit extends Cubit<NewsState> {
     );
 
     _repository.fetchAndRefreshNews().then((_) {
-      // Stream Isar reaktif otomatis mendistribusikan data terbaru ke UI
+      // Data berhasil sinkron ke Isar
     }).catchError((error) {
       if (state is! NewsSuccess) {
         emit(const NewsFailure(message: 'Koneksi internet terputus. Gagal memuat berita baru.'));
