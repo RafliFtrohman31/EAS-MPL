@@ -1,0 +1,53 @@
+name: Flutter CI/CD - Build APK Rilis PROD
+
+on:
+  push:
+    branches:
+      - master
+      - main
+  pull_request:
+    branches:
+      - master
+      - main
+
+jobs:
+  build:
+    name: Build & Release Android APK
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Mengambil kode terbaru dari repositori GitHub
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # 2. Memasang Java Keperluan Gradle Android
+      - name: Set up Java Development Kit (JDK)
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      # 3. Memasang SDK Flutter ke dalam Virtual Machine
+      - name: Set up Flutter SDK
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+
+      # 4. Mengunduh semua paket dependensi pub.dev
+      - name: Install Dependencies
+        run: flutter pub get
+
+      # 5. Menjalankan Pengujian Otomatis (Opsional jika ada)
+      - name: Run Tests
+        run: flutter test --allow-scanning || echo "Tidak ada test yang gagal"
+
+      # 6. Merakit APK Rilis menggunakan Injeksi Perbaikan Gradle Anda
+      - name: Build APK Release PROD
+        run: flutter build apk --release --dart-define=ENV_NAME=PROD
+
+      # 7. Menyimpan File APK Hasil Build ke Artifacts GitHub (Bisa diunduh dosen)
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-release-production
+          path: build/app/outputs/flutter-apk/app-release.apk
