@@ -4,11 +4,9 @@ import '../config/env_config.dart';
 class AppTheme {
   AppTheme._();
 
-  // Skema Warna Elegan untuk Mode PROD (Biru Gelap Premium)
-  static const Color _prodPrimary = Color(0xFF0F172A); // Slate Blue / Deep Blue
-  static const Color _prodSecondary = Color(0xFF2563EB); // Royal Blue Accent
+  static const Color _prodPrimary = Color(0xFF0F172A); 
+  static const Color _prodSecondary = Color(0xFF2563EB); 
 
-  // Skema Warna untuk Mode DEV (Teal Modern)
   static const Color _devPrimary = Color(0xFF0D9488); 
   static const Color _devSecondary = Color(0xFF14B8A6);
 
@@ -18,16 +16,15 @@ class AppTheme {
 
     return ThemeData(
       useMaterial3: true,
-      brightness: Brightness.light, // WAJIB LIGHT MODE (Digit NPM Genap: 8)
+      brightness: Brightness.light, // WAJIB LIGHT MODE (NPM Genap: 8)
       colorScheme: ColorScheme.light(
         primary: primaryColor,
         secondary: secondaryColor,
-        surface: const Color(0xFFF8FAFC), // Latar belakang putih keabu-abuan bersih
+        surface: const Color(0xFFF8FAFC), 
         onSurface: const Color(0xFF0F172A),
       ),
       scaffoldBackgroundColor: const Color(0xFFF8FAFC),
       
-      // Desain AppBar Elegan & Tipis
       appBarTheme: AppBarTheme(
         backgroundColor: const Color(0xFFFFFFFF),
         elevation: 0,
@@ -40,22 +37,22 @@ class AppTheme {
           letterSpacing: -0.5,
         ),
         shape: Border(
-          bottom: BorderSide(color: Colors.grey.withOpacity(0.1), width: 1),
+          // FIX: Menggunakan .withValues() untuk menggantikan .withOpacity() yang deprecated
+          bottom: BorderSide(color: Colors.grey.withValues(alpha: 0.1), width: 1),
         ),
       ),
 
-      // Desain Card Premium modern tanpa bayangan kaku (Shadowless)
-      cardTheme: CardTheme(
+      // FIX: Menggunakan CardThemeData agar sesuai dengan parameter parameter type ThemeData
+      cardTheme: CardThemeData(
         color: const Color(0xFFFFFFFF),
         elevation: 0,
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         shape: RoundedRectangleBorder(
-          side: BorderSide(color: const Color(0xFFE2E8F0), width: 1), // Border tipis halus
+          side: const BorderSide(color: Color(0xFFE2E8F0), width: 1), 
           borderRadius: BorderRadius.circular(16),
         ),
       ),
 
-      // Tipografi bergaya editorial berita modern
       textTheme: const TextTheme(
         headlineLarge: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Color(0xFF0F172A), letterSpacing: -1),
         titleLarge: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: Color(0xFF0F172A), height: 1.3),
