@@ -5,10 +5,15 @@ import 'core/routing/app_router.dart';
 import 'core/di/injection.dart';
 
 void main() async {
+  // 1. Wajib dipanggil pertama kali jika menggunakan async di fungsi main (Modul 15)
   WidgetsFlutterBinding.ensureInitialized();
   
-  // Inisialisasi Dependency Injection
-  setupLocator(); 
+  try {
+    // 2. PERBAIKAN: Gunakan await jika setupLocator diubah menjadi Future
+    await setupLocator(); 
+  } catch (e) {
+    debugPrint("Error saat inisialisasi DI/Isar: $e");
+  }
   
   runApp(const FinalProjectApp());
 }
@@ -19,16 +24,9 @@ class FinalProjectApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      // Aturan: Sembunyikan banner debug jika berjalan di PROD
       debugShowCheckedModeBanner: !EnvConfig.isProduction,
-      
-      // Membaca nama aplikasi secara dinamis berdasarkan NIM & Flavor
       title: EnvConfig.appName, 
-      
-      // Menerapkan tema light mode kustom kita
       theme: AppTheme.lightTheme,
-      
-      // Konfigurasi Router bawaan Modul 15
       routerConfig: AppRouter.router,
     );
   }
