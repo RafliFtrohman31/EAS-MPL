@@ -40,7 +40,7 @@ class _HomePageState extends State<HomePage> {
           Container(
             margin: const EdgeInsets.only(right: 8),
             decoration: BoxDecoration(
-              color: Colors.white.withAlpha(38), // Perbaikan: Ganti withOpacity lama
+              color: Colors.white.withAlpha(38),
               shape: BoxShape.circle,
             ),
             child: IconButton(
@@ -143,119 +143,127 @@ class _HomePageState extends State<HomePage> {
                 itemCount: articles.length,
                 itemBuilder: (context, index) {
                   final article = articles[index];
-                  return Container(
-                    margin: const EdgeInsets.only(bottom: 20),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(16),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withAlpha(10), // Perbaikan: Ganti withOpacity lama
-                          blurRadius: 12,
-                          offset: const Offset(0, 4),
-                        ),
-                      ],
-                    ),
-                    clipBehavior: Clip.antiAlias,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        if (article.urlToImage.isNotEmpty)
-                          Stack(
-                            children: [
-                              Image.network(
-                                article.urlToImage,
-                                height: 200,
-                                width: double.infinity,
-                                fit: BoxFit.cover,
-                                errorBuilder: (context, error, stackTrace) {
-                                  return Container(
-                                    height: 200,
-                                    color: Colors.grey[200],
-                                    child: Center(
-                                      child: Icon(
-                                        Icons.broken_image_rounded,
-                                        size: 48,
-                                        color: Colors.grey[400],
-                                      ),
-                                    ),
-                                  );
-                                },
-                              ),
-                              Positioned(
-                                top: 12,
-                                right: 12,
-                                child: Container(
-                                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                                  decoration: BoxDecoration(
-                                    color: Colors.black.withAlpha(153), // Perbaikan: Ganti withOpacity lama
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: const [
-                                      Icon(Icons.storage_rounded, size: 12, color: Colors.greenAccent), // Perbaikan: emeraldAccent -> greenAccent
-                                      SizedBox(width: 4),
-                                      Text(
-                                        'Isar Cached',
-                                        style: TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
+                  
+                  // 🛠️ PERBAIKAN: Dibungkus dengan InkWell untuk aksi klik ke halaman detail
+                  return InkWell(
+                    onTap: () {
+                      context.push('/detail', extra: article);
+                    },
+                    borderRadius: BorderRadius.circular(16),
+                    child: Container(
+                      margin: const EdgeInsets.only(bottom: 20),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(16),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withAlpha(10),
+                            blurRadius: 12,
+                            offset: const Offset(0, 4),
                           ),
-                        Padding(
-                          padding: const EdgeInsets.all(18),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                article.title,
-                                style: theme.textTheme.titleMedium?.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.grey[900],
-                                  height: 1.3,
-                                ),
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                              const SizedBox(height: 10),
-                              Text(
-                                article.content,
-                                style: theme.textTheme.bodyMedium?.copyWith(
-                                  color: Colors.grey[600],
-                                  height: 1.5,
-                                ),
-                                maxLines: 3,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                              const SizedBox(height: 16),
-                              const Divider(height: 1), // Perbaikan: Hapus pemanggilan konstanta ilegal DividerThemeData
-                              const SizedBox(height: 12),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Icon(Icons.access_time_rounded, size: 14, color: Colors.grey[400]),
-                                      const SizedBox(width: 4),
-                                      Text(
-                                        'Diterbitkan: ${article.publishedAt}',
-                                        style: theme.textTheme.labelSmall?.copyWith(
-                                          color: Colors.grey[500],
+                        ],
+                      ),
+                      clipBehavior: Clip.antiAlias,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          if (article.urlToImage.isNotEmpty)
+                            Stack(
+                              children: [
+                                Image.network(
+                                  article.urlToImage,
+                                  height: 200,
+                                  width: double.infinity,
+                                  fit: BoxFit.cover,
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return Container(
+                                      height: 200,
+                                      color: Colors.grey[200],
+                                      child: Center(
+                                        child: Icon(
+                                          Icons.broken_image_rounded,
+                                          size: 48,
+                                          color: Colors.grey[400],
                                         ),
                                       ),
-                                    ],
+                                    );
+                                  },
+                                ),
+                                Positioned(
+                                  top: 12,
+                                  right: 12,
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                                    decoration: BoxDecoration(
+                                      color: Colors.black.withAlpha(153),
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: const [
+                                        Icon(Icons.storage_rounded, size: 12, color: Colors.greenAccent),
+                                        SizedBox(width: 4),
+                                        Text(
+                                          'Isar Cached',
+                                          style: TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                  Icon(Icons.arrow_forward_ios_rounded, size: 14, color: Colors.indigo[300]),
-                                ],
-                              ),
-                            ],
+                                ),
+                              ],
+                            ),
+                          Padding(
+                            padding: const EdgeInsets.all(18),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  article.title,
+                                  style: theme.textTheme.titleMedium?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.grey[900],
+                                    height: 1.3,
+                                  ),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                const SizedBox(height: 10),
+                                Text(
+                                  article.content,
+                                  style: theme.textTheme.bodyMedium?.copyWith(
+                                    color: Colors.grey[600],
+                                    height: 1.5,
+                                  ),
+                                  maxLines: 3,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                const SizedBox(height: 16),
+                                const Divider(height: 1),
+                                const SizedBox(height: 12),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Icon(Icons.access_time_rounded, size: 14, color: Colors.grey[400]),
+                                        const SizedBox(width: 4),
+                                        Text(
+                                          'Diterbitkan: ${article.publishedAt}',
+                                          style: theme.textTheme.labelSmall?.copyWith(
+                                            color: Colors.grey[500],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Icon(Icons.arrow_forward_ios_rounded, size: 14, color: Colors.indigo[300]),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   );
                 },
